@@ -6,7 +6,7 @@ private:
     int front = -1;
     int rear = -1;
     int size = 4;
-    int *elements = (int *) malloc(size * sizeof(int));
+    int *elements = &size;
 public:
     bool full();
 
