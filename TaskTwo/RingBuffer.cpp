@@ -1,5 +1,4 @@
 #include <iostream>
-#include "RingBufferList.cpp"
 
 class RingBuffer {
 
