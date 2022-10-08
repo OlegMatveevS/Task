@@ -21,6 +21,8 @@ public:
 
     void InsertAtPosition(int, int);
 
+    void DeleteAtPosition(int position);
+
     void Display();
 
     ~RingBufferList();

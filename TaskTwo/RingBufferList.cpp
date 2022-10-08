@@ -1,19 +1,15 @@
 #include "RingBufferList.h"
+
+
 RingBufferList::RingBufferList() {
     head = NULL;
 }
 
 Node *RingBufferList::create(int localData) {
-    try {
-        Node *node = new Node;
-        node->data = localData;
-        node->next = NULL;
-        return node;
-    }
-    catch (std::bad_alloc xa) {
-        std::cout << "Can't Allocate Memory\n";
-        return NULL;
-    }
+    Node *node = new Node;
+    node->data = localData;
+    node->next = NULL;
+    return node;
 }
 
 void RingBufferList::InsertBegin(int dataItem) {
@@ -23,8 +19,9 @@ void RingBufferList::InsertBegin(int dataItem) {
         head->next = head;
     } else {
         Node *temp = head;
-        while (temp->next != head)
+        while (temp->next != head) {
             temp = temp->next;
+        }
         temp->next = node;
         node->next = head;
         head = node;
@@ -73,6 +70,35 @@ void RingBufferList::InsertAtPosition(int dataItem, int position) {
     }
 }
 
+void RingBufferList::DeleteAtPosition(int position) {
+    if (head == NULL) {
+        std::cout << "Can't delete\n";
+    } else {
+        if (position == 1) {
+            Node *temp = head;
+            while (temp->next != head) {
+                temp = temp->next;
+            }
+            temp->next = head->next;
+            temp = head;
+            head = head->next;
+            delete temp;
+        } else {
+            Node *temp = head;
+            Node *prev = NULL;
+            for (int i = 1; i < position - 1; i++) {
+                if (temp->next == head) {
+                    break;
+                }
+                prev = temp;
+                temp = temp->next;
+            }
+            prev->next = temp->next;
+            delete temp;
+        }
+    }
+}
+
 void RingBufferList::Display() {
     Node *temp = head;
 
@@ -104,6 +130,7 @@ int main() {
         ListOne.InsertTail(i);
     }
     ListOne.InsertAtPosition(20, 1);
+    ListOne.DeleteAtPosition(3);
     ListOne.Display();
     return 0;
 }
