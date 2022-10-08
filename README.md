@@ -29,10 +29,10 @@ bool isEven(int value)
     return value%2==0;
 }
 ```
-Проведем дизассемблинг gcc 12.2
-![image](https://user-images.githubusercontent.com/55399599/194369449-4229ed4e-1c69-499e-9c49-8865085711de.png)
+Проведем дизассемблинг gcc 12.2 \
+![image](https://user-images.githubusercontent.com/55399599/194720504-244837c4-dd98-4f44-ab41-08907693e14b.png)
 
-Проведем дизассемблинг clang 15.0.0
+Проведем дизассемблинг clang 15.0.0 \
 ![image](https://user-images.githubusercontent.com/55399599/194623351-67430be7-0528-44d6-9921-3dac1206d20d.png)
 
 Как видим, для gcc в предлагаемой заданием функцией также используется оператор AND как и в первой моей реализации четности.
