@@ -1,32 +1,35 @@
 #ifndef TASK_RINGBUFFERLIST_H
 #define TASK_RINGBUFFERLIST_H
+
 #include <iostream>
 
+template<typename T>
 struct Node {
-    int data;
-    Node *next = NULL;
+    T data;
+    Node<T> *next = NULL;
 };
 
+template<typename T>
 class RingBufferList {
 private:
-    Node *head;
+    Node<T> *head;
+
 public:
     RingBufferList();
 
-    Node *create(int);
+    Node<T> *create(T);
 
-    void InsertBegin(int);
+    void InsertBegin(T);
 
-    void InsertTail(int);
+    void InsertTail(T);
 
-    void InsertAtPosition(int, int);
+    void InsertAtPosition(T, int);
 
     void DeleteAtPosition(int position);
 
     void Display();
 
     ~RingBufferList();
-
 };
 
-#endif //TASK_RINGBUFFERLIST_H
+#endif // TASK_RINGBUFFERLIST_H

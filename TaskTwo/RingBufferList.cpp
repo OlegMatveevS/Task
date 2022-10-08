@@ -1,24 +1,26 @@
 #include "RingBufferList.h"
 
-
-RingBufferList::RingBufferList() {
+template<typename T>
+RingBufferList<T>::RingBufferList() {
     head = NULL;
 }
 
-Node *RingBufferList::create(int localData) {
-    Node *node = new Node;
+template<typename T>
+Node<T> *RingBufferList<T>::create(T localData) {
+    Node<T> *node = new Node<T>;
     node->data = localData;
     node->next = NULL;
     return node;
 }
 
-void RingBufferList::InsertBegin(int dataItem) {
-    Node *node = create(dataItem);
+template<typename T>
+void RingBufferList<T>::InsertBegin(T dataItem) {
+    Node<T> *node = create(dataItem);
     if (head == NULL) {
         head = node;
         head->next = head;
     } else {
-        Node *temp = head;
+        Node<T> *temp = head;
         while (temp->next != head) {
             temp = temp->next;
         }
@@ -28,13 +30,14 @@ void RingBufferList::InsertBegin(int dataItem) {
     }
 }
 
-void RingBufferList::InsertTail(int dataItem) {
-    Node *node = create(dataItem);
+template<typename T>
+void RingBufferList<T>::InsertTail(T dataItem) {
+    Node<T> *node = create(dataItem);
     if (head == NULL) {
         head = node;
         head->next = head;
     } else {
-        Node *temp = head;
+        Node<T> *temp = head;
         while (temp->next != head) {
             temp = temp->next;
         }
@@ -43,21 +46,22 @@ void RingBufferList::InsertTail(int dataItem) {
     node->next = head;
 }
 
-void RingBufferList::InsertAtPosition(int dataItem, int position) {
-    Node *node = create(dataItem);
+template<typename T>
+void RingBufferList<T>::InsertAtPosition(T dataItem, int position) {
+    Node<T> *node = create(dataItem);
     if (head == NULL) {
         head = node;
         head->next = head;
     } else {
         if (position == 1) {
-            Node *temp = head;
+            Node<T> *temp = head;
             while (temp->next != head)
                 temp = temp->next;
             temp->next = node;
             node->next = head;
             head = node;
         } else {
-            Node *temp = head;
+            Node<T> *temp = head;
             for (int i = 1; i < position - 1; i++) {
                 if (temp->next == head) {
                     break;
@@ -70,12 +74,13 @@ void RingBufferList::InsertAtPosition(int dataItem, int position) {
     }
 }
 
-void RingBufferList::DeleteAtPosition(int position) {
+template<typename T>
+void RingBufferList<T>::DeleteAtPosition(int position) {
     if (head == NULL) {
         std::cout << "Can't delete\n";
     } else {
         if (position == 1) {
-            Node *temp = head;
+            Node<T> *temp = head;
             while (temp->next != head) {
                 temp = temp->next;
             }
@@ -84,8 +89,8 @@ void RingBufferList::DeleteAtPosition(int position) {
             head = head->next;
             delete temp;
         } else {
-            Node *temp = head;
-            Node *prev = NULL;
+            Node<T> *temp = head;
+            Node<T> *prev = NULL;
             for (int i = 1; i < position - 1; i++) {
                 if (temp->next == head) {
                     break;
@@ -99,8 +104,9 @@ void RingBufferList::DeleteAtPosition(int position) {
     }
 }
 
-void RingBufferList::Display() {
-    Node *temp = head;
+template<typename T>
+void RingBufferList<T>::Display() {
+    Node<T> *temp = head;
 
     do {
         std::cout << temp->data << "  ";
@@ -108,8 +114,9 @@ void RingBufferList::Display() {
     } while (temp != head);
 }
 
-RingBufferList::~RingBufferList() {
-    Node *p = head, *q;
+template<typename T>
+RingBufferList<T>::~RingBufferList() {
+    Node<T> *p = head, *q;
     while ((p != NULL) && (p->next != NULL)) {
         q = p->next;
         p->next = q->next;
@@ -120,11 +127,10 @@ RingBufferList::~RingBufferList() {
 }
 
 int main() {
-    RingBufferList ListOne;
+    RingBufferList<int> ListOne;
 
     for (int i = 0; i <= 10; i++) {
         ListOne.InsertBegin(i);
-
     }
     for (int i = 10; i <= 15; i++) {
         ListOne.InsertTail(i);

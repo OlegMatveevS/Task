@@ -1,24 +1,29 @@
 #include "RingBuffer.h"
 
-RingBuffer::RingBuffer(int size) {
+template<typename T>
+RingBuffer<T>::RingBuffer(int size) {
     size = size;
     this->buffer = new int[size];
     this->size = size;
 };
 
-bool RingBuffer::full() const {
+template<typename T>
+bool RingBuffer<T>::full() const {
     return (front == (rear + 1) % size);
 }
 
-bool RingBuffer::empty() const {
+template<typename T>
+bool RingBuffer<T>::empty() const {
     return (front == rear + 1);
 }
 
-bool RingBuffer::checkPointer() const {
+template<typename T>
+bool RingBuffer<T>::checkPointer() const {
     return (front == rear);
 }
 
-void RingBuffer::resize() {
+template<typename T>
+void RingBuffer<T>::resize() {
     int *foo = new int[size * 2];
     for (int i = 0; i < size; i++) {
         foo[i] = buffer[i];
@@ -28,16 +33,19 @@ void RingBuffer::resize() {
     size *= 2;
 }
 
-void RingBuffer::push(int element) {
+template<typename T>
+void RingBuffer<T>::push(int element) {
     if (full()) {
         resize();
     }
-    if (front == -1) front = 0;
+    if (front == -1)
+        front = 0;
     rear = (rear + 1) % size;
     buffer[rear] = element;
 }
 
-int RingBuffer::pop() {
+template<typename T>
+int RingBuffer<T>::pop() {
     int element;
     if (empty()) {
         std::cout << "circleBuffer is empty" << std::endl;
@@ -54,7 +62,8 @@ int RingBuffer::pop() {
     }
 }
 
-void RingBuffer::Display() {
+template<typename T>
+void RingBuffer<T>::Display() {
     {
         for (int i = 0; i < size; i++) {
             std::cout << buffer[i];
@@ -62,17 +71,13 @@ void RingBuffer::Display() {
     }
 }
 
-RingBuffer::~RingBuffer()
-{
+template<typename T>
+RingBuffer<T>::~RingBuffer() {
     delete[] buffer;
 }
 
-
-
-
-
 int main() {
-    RingBuffer ringBuffer(6);
+    RingBuffer<int> ringBuffer(6);
     ringBuffer.push(2);
     ringBuffer.push(3);
     ringBuffer.push(4);
