@@ -1,30 +1,9 @@
-#include <list>
+#include "RingBufferList.h"
+RingBufferList::RingBufferList() {
+    head = NULL;
+}
 
-
-struct Node {
-    int data;
-    Node *next = NULL;
-};
-
-class CircularRingList {
-private:
-    Node *head;
-public:
-    CircularRingList() { head = NULL; }
-
-    Node *create(int);
-
-    void InsertBegin(int);
-
-    void InsertTail(int);
-
-    void InsertAtPosition(int, int);
-
-    void Display();
-
-};
-
-Node *CircularRingList::create(int localData) {
+Node *RingBufferList::create(int localData) {
     try {
         Node *node = new Node;
         node->data = localData;
@@ -37,7 +16,7 @@ Node *CircularRingList::create(int localData) {
     }
 }
 
-void CircularRingList::InsertBegin(int dataItem) {
+void RingBufferList::InsertBegin(int dataItem) {
     Node *node = create(dataItem);
     if (head == NULL) {
         head = node;
@@ -52,7 +31,7 @@ void CircularRingList::InsertBegin(int dataItem) {
     }
 }
 
-void CircularRingList::InsertTail(int dataItem) {
+void RingBufferList::InsertTail(int dataItem) {
     Node *node = create(dataItem);
     if (head == NULL) {
         head = node;
@@ -67,7 +46,7 @@ void CircularRingList::InsertTail(int dataItem) {
     node->next = head;
 }
 
-void CircularRingList::InsertAtPosition(int dataItem, int position) {
+void RingBufferList::InsertAtPosition(int dataItem, int position) {
     Node *node = create(dataItem);
     if (head == NULL) {
         head = node;
@@ -94,8 +73,7 @@ void CircularRingList::InsertAtPosition(int dataItem, int position) {
     }
 }
 
-void CircularRingList::Display() {
-    std::cout << std::endl;
+void RingBufferList::Display() {
     Node *temp = head;
 
     do {
@@ -104,8 +82,19 @@ void CircularRingList::Display() {
     } while (temp != head);
 }
 
+RingBufferList::~RingBufferList() {
+    Node *p = head, *q;
+    while ((p != NULL) && (p->next != NULL)) {
+        q = p->next;
+        p->next = q->next;
+        q->next = NULL;
+        delete q;
+        p = p->next;
+    }
+}
+
 int main() {
-    CircularRingList ListOne;
+    RingBufferList ListOne;
 
     for (int i = 0; i <= 10; i++) {
         ListOne.InsertBegin(i);
@@ -114,7 +103,7 @@ int main() {
     for (int i = 10; i <= 15; i++) {
         ListOne.InsertTail(i);
     }
-    ListOne.InsertAtPosition(100, 1);
+    ListOne.InsertAtPosition(20, 1);
     ListOne.Display();
     return 0;
 }
